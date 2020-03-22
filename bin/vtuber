@@ -1,3 +1,8 @@
 #!/usr/bin/env python
+import os
+import random
 
-print(open('ascii/桐生ココ.ascii').read())
+basepath = '{}/..'.format(os.path.dirname(__file__))
+asciis = os.listdir('{}/ascii'.format(basepath))
+random.shuffle(asciis)
+print(open('{}/ascii/{}'.format(basepath, asciis.pop())).read())
