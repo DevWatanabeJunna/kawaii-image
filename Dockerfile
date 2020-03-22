@@ -1,20 +1,19 @@
-FROM python:3.6
+FROM python:3.7-alpine3.10
 
-RUN apt-get update -y && \
-    apt-get install -yq make cmake gcc g++ unzip wget build-essential gcc zlib1g-dev && \
-    ln -s /usr/include/libv4l1-videodev.h /usr/include/linux/videodev.h
+RUN apk update --no-cache \
+    && apk add --no-cache bash sudo git vim curl zip
 
-WORKDIR /tmp/opencv
+RUN addgroup -S loginuser \
+    && adduser -S loginuser -G loginuser \
+    && echo "loginuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
-RUN wget -P /tmp/ https://github.com/Itseez/opencv/archive/3.1.0.zip && \
-    unzip /tmp/3.1.0.zip && \
-    cd opencv-3.1.0 && \
-    cmake CMakeLists.txt -DWITH_TBB=ON \
-    -DINSTALL_CREATE_DISTRIB=ON \
-    -DWITH_FFMPEG=OFF \
-    -DWITH_IPP=OFF \
-    -DCMAKE_INSTALL_PREFIX=/usr/local && \
-    make -j2 && \
-    make install && \
-    pip3 install --upgrade setuptools pip && \
-    pip3 install jupyter matplotlib opencv-python opencv-contrib-python
+USER loginuser
+WORKDIR /home/loginuser
+
+COPY --chown=loginuser:loginuser ascii ascii
+COPY --chown=loginuser:loginuser bin bin
+COPY --chown=loginuser:loginuser conf/.bashrc .bashrc
+
+RUN chmod 777 bin/*
+
+CMD [ "bash" ]
