@@ -1,0 +1,3 @@
+#!/usr/bin/env python
+
+print(open('ascii/桐生ココ.ascii').read())
