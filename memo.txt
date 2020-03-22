@@ -1,0 +1,11 @@
+
+一旦、特殊文字の解釈をさせなければならない...
+$ docker-compose run notebook python converter.py > ascii/桐生ココ.ascii_ && printf "$(cat ascii/桐生ココ.ascii_)
+" > ascii/桐生ココ.ascii && rm -f ascii/桐生ココ.ascii_
+
+リンク
+
+- https://qiita.com/zakuroishikuro/items/85752153119927526704
+- https://zariganitosh.hatenablog.jp/entry/20150224/escape_sequence
+- https://teratail.com/questions/83372
+- https://qiita.com/AtomJamesScott/items/ccef87b1092d7407de0d
